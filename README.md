@@ -34,7 +34,8 @@ SmartEvent is a modern, multi-page web application designed to manage tasks and 
 
 ## 📸 Preview
 
-![SmartEvent Screenshot](screenshot.png)
+[<img width="1913" height="672" alt="photo" src="https://github.com/user-attachments/assets/9c7d7ea4-f13c-4327-b4d6-9172b657bbb1" />
+]
 
 ## 📄 License
 
@@ -42,4 +43,4 @@ This project is open-source and free to use for learning and development purpose
 
 ---
 
-Made with ❤️ by [Your Name Here]
+Made with ❤️ by [Sagar]
