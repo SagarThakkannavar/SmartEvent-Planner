@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Event | SmartEvent</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+    }
+
+    nav {
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: 600;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    input[type="date"] {
+      background: #fff;
+      color: #333;
+    }
+
+    input[type="text"] {
+      background: #fff;
+      color: #333;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #43a047;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 10px;
+      color: #c8e6c9;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div><strong>SmartEvent</strong></div>
+    <div>
+      <a href="add-event.html">Add Event</a>
+      <a href="events.html">View Events</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2>Create New Event</h2>
+    <input type="date" id="eventDate" />
+    <input type="text" id="eventTitle" placeholder="Enter event title" />
+    <button onclick="addEvent()">Add Event</button>
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    function addEvent() {
+      const date = document.getElementById('eventDate').value;
+      const title = document.getElementById('eventTitle').value.trim();
+      const message = document.getElementById('message');
+      const email = localStorage.getItem('userEmail');
+
+      if (!email) {
+        alert("You're not logged in!");
+        window.location.href = 'login.html';
+        return;
+      }
+
+      if (!date || !title) {
+        message.textContent = 'Please select a date and enter a title.';
+        return;
+      }
+
+      const newEvent = { date, title };
+      const events = JSON.parse(localStorage.getItem('events') || '[]');
+      events.push(newEvent);
+      localStorage.setItem('events', JSON.stringify(events));
+
+      message.textContent = `Event added successfully. Notification sent to ${email}`;
+      document.getElementById('eventDate').value = '';
+      document.getElementById('eventTitle').value = '';
+    }
+  </script>
+</body>
+</html>

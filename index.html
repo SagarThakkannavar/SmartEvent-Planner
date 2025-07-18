@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | SmartEvent</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(120deg, #667eea, #764ba2);
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-wrapper {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      padding: 40px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      color: #fff;
+      animation: fadeIn 1s ease;
+    }
+
+    .login-wrapper h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .login-wrapper p {
+      font-size: 14px;
+      margin-bottom: 30px;
+      color: #eee;
+    }
+
+    .login-wrapper input {
+      width: 100%;
+      padding: 12px 15px;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .login-wrapper button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background-color: #4caf50;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .login-wrapper button:hover {
+      background-color: #43a047;
+    }
+
+    .message {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #c8e6c9;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      .login-wrapper {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-wrapper">
+    <h1>SmartEvent</h1>
+    <p>Login with your Gmail to get started</p>
+    <input type="email" id="email" placeholder="Enter your Gmail" required />
+    <button onclick="login()">Login</button>
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    function login() {
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message');
+
+      if (!email || !email.includes('@gmail.com')) {
+        message.textContent = 'Please enter a valid Gmail address.';
+        return;
+      }
+
+      localStorage.setItem('userEmail', email);
+      message.textContent = `Login successful. Notification sent to ${email}`;
+
+      setTimeout(() => {
+        window.location.href = 'add-event.html';
+      }, 1500);
+    }
+  </script>
+</body>
+</html>

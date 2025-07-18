@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Events | SmartEvent</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+    }
+
+    nav {
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: 600;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .event-item {
+      background: #fff;
+      color: #333;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .event-info {
+      flex: 1;
+    }
+
+    .event-actions button {
+      margin-left: 10px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .edit-btn {
+      background-color: #ffa000;
+      color: #fff;
+    }
+
+    .delete-btn {
+      background-color: #e53935;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div><strong>SmartEvent</strong></div>
+    <div>
+      <a href="add-event.html">Add Event</a>
+      <a href="events.html">View Events</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2>My Events</h2>
+    <div id="eventList"></div>
+  </div>
+
+  <script>
+    const eventList = document.getElementById('eventList');
+
+    function loadEvents() {
+      const events = JSON.parse(localStorage.getItem('events') || '[]');
+      eventList.innerHTML = '';
+
+      if (events.length === 0) {
+        eventList.innerHTML = '<p style="text-align:center; color: #ccc;">No events added yet.</p>';
+        return;
+      }
+
+      events.forEach((event, index) => {
+        const div = document.createElement('div');
+        div.className = 'event-item';
+
+        const info = document.createElement('div');
+        info.className = 'event-info';
+        info.innerHTML = `<strong>${event.title}</strong><br><small>${event.date}</small>`;
+
+        const actions = document.createElement('div');
+        actions.className = 'event-actions';
+
+        const editBtn = document.createElement('button');
+        editBtn.textContent = 'Edit';
+        editBtn.className = 'edit-btn';
+        editBtn.onclick = () => editEvent(index);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.onclick = () => deleteEvent(index);
+
+        actions.appendChild(editBtn);
+        actions.appendChild(deleteBtn);
+        div.appendChild(info);
+        div.appendChild(actions);
+
+        eventList.appendChild(div);
+      });
+    }
+
+    function deleteEvent(index) {
+      let events = JSON.parse(localStorage.getItem('events'));
+      events.splice(index, 1);
+      localStorage.setItem('events', JSON.stringify(events));
+      loadEvents();
+    }
+
+    function editEvent(index) {
+      let events = JSON.parse(localStorage.getItem('events'));
+      const current = events[index];
+
+      const newTitle = prompt('Edit event title:', current.title);
+      const newDate = prompt('Edit event date (YYYY-MM-DD):', current.date);
+
+      if (newTitle && newDate) {
+        events[index] = { title: newTitle.trim(), date: newDate.trim() };
+        localStorage.setItem('events', JSON.stringify(events));
+        loadEvents();
+      }
+    }
+
+    loadEvents();
+  </script>
+</body>
+</html>
